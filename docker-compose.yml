@@ -1,0 +1,174 @@
+version: "3.9"
+
+# ══════════════════════════════════════════════════════════════════
+#  SYSTÈME DE CYBERSÉCURITÉ ON-PREMISE — ADMINISTRATION RDC
+#  TSHIMANGA MPOLESHA Excellence — Mémoire DEA/DES
+#  Basé sur : NIST CSF · ISO/IEC 27001 · NIST SP 800-61
+# ══════════════════════════════════════════════════════════════════
+
+networks:
+  dmz:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.10.0/24
+  lan_interne:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.20.0/24
+  lan_serveurs:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.30.0/24
+  soc_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.40.0/24
+
+volumes:
+  siem_data:
+  siem_logs:
+  backend_logs:
+  threat_db:
+
+services:
+
+  # ─────────────────────────────────────────────────
+  # 🌐 REVERSE PROXY / POINT D'ENTRÉE (DMZ)
+  # Simule le pare-feu périmétrique
+  # ─────────────────────────────────────────────────
+  nginx-proxy:
+    image: nginx:alpine
+    container_name: firewall-proxy
+    hostname: firewall-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+    networks:
+      dmz:
+        ipv4_address: 172.16.10.2
+      lan_interne:
+        ipv4_address: 192.168.20.2
+    depends_on:
+      - soc-dashboard
+      - api-backend
+    restart: unless-stopped
+    labels:
+      - "role=perimetre"
+      - "layer=C1-Perimetre"
+      - "description=Reverse Proxy / Pare-feu applicatif"
+
+  # ─────────────────────────────────────────────────
+  # 🖥️  SOC DASHBOARD FRONTEND (LAN)
+  # Interface de supervision en temps réel
+  # ─────────────────────────────────────────────────
+  soc-dashboard:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: soc-dashboard
+    hostname: soc-dashboard
+    networks:
+      lan_interne:
+        ipv4_address: 192.168.20.10
+    environment:
+      - REACT_APP_API_URL=http://api-backend:5000
+      - REACT_APP_SIEM_URL=http://siem-engine:9200
+    depends_on:
+      - api-backend
+    restart: unless-stopped
+    labels:
+      - "role=supervision"
+      - "layer=C5-SOC"
+      - "description=Tableau de bord SOC interactif"
+
+  # ─────────────────────────────────────────────────
+  # ⚙️  API BACKEND — MOTEUR DE SÉCURITÉ (SERVEURS)
+  # Génère les événements, simule les attaques, gère le SIEM
+  # ─────────────────────────────────────────────────
+  api-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: api-backend
+    hostname: api-backend
+    networks:
+      lan_serveurs:
+        ipv4_address: 192.168.30.10
+      lan_interne:
+        ipv4_address: 192.168.20.20
+      soc_net:
+        ipv4_address: 192.168.40.10
+    environment:
+      - FLASK_ENV=production
+      - SIEM_HOST=siem-engine
+      - SIEM_PORT=9200
+      - LOG_LEVEL=INFO
+      - INCIDENT_AUTO_RESPONSE=true
+    volumes:
+      - backend_logs:/app/logs
+      - threat_db:/app/data
+    restart: unless-stopped
+    labels:
+      - "role=backend-securite"
+      - "layer=C5-SOC"
+      - "description=Moteur de détection et simulation d'attaques"
+
+  # ─────────────────────────────────────────────────
+  # 👁️  SIEM — MOTEUR DE CORRÉLATION (SOC)
+  # Simule Wazuh/ELK pour la corrélation des événements
+  # ─────────────────────────────────────────────────
+  siem-engine:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.siem
+    container_name: siem-engine
+    hostname: siem-engine
+    networks:
+      soc_net:
+        ipv4_address: 192.168.40.20
+      lan_serveurs:
+        ipv4_address: 192.168.30.20
+    environment:
+      - SIEM_MODE=standalone
+      - RETENTION_DAYS=30
+      - ALERT_THRESHOLD=medium
+    volumes:
+      - siem_data:/siem/data
+      - siem_logs:/siem/logs
+    restart: unless-stopped
+    labels:
+      - "role=siem"
+      - "layer=C5-SOC"
+      - "description=Security Information and Event Management (WAZUH-like)"
+
+  # ─────────────────────────────────────────────────
+  # 🎯  ATTACK SIMULATOR — LAB DE SIMULATION
+  # Génère des attaques réalistes contrôlées
+  # ─────────────────────────────────────────────────
+  attack-simulator:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.attacker
+    container_name: attack-simulator
+    hostname: attacker-node
+    networks:
+      dmz:
+        ipv4_address: 172.16.10.100
+    environment:
+      - TARGET_API=http://192.168.20.20:5000
+      - SIMULATION_MODE=safe
+      - AUTO_START=false
+    depends_on:
+      - api-backend
+    restart: unless-stopped
+    labels:
+      - "role=lab-simulation"
+      - "layer=DMZ"
+      - "description=Simulateur d'attaques contrôlées pour démonstration"

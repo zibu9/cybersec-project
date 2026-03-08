@@ -1,0 +1,8 @@
+FROM python:3.11-slim
+WORKDIR /siem
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY siem.py .
+RUN mkdir -p /siem/data /siem/logs
+EXPOSE 9200
+CMD ["python", "-u", "siem.py"]
