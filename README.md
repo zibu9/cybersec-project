@@ -1,11 +1,11 @@
-# 🛡️ PROTOTYPE CYBERSÉCURITÉ SOC — ADMINISTRATION PUBLIQUE RDC
+# PROTOTYPE CYBERSÉCURITÉ SOC — ADMINISTRATION PUBLIQUE RDC
 
 **TSHIMANGA MPOLESHA Excellence — Mémoire DEA/DES 2025**  
 *Étude portant sur le déploiement d'un système de cybersécurité contre les attaques dans un environnement hybride*
 
 ---
 
-## 📋 Description du prototype
+## Description du prototype
 
 Ce projet Docker démontre de manière **applicative et pratique** les contributions du mémoire :
 
@@ -17,26 +17,26 @@ Ce projet Docker démontre de manière **applicative et pratique** les contribut
 
 ---
 
-## 🏗️ Architecture des conteneurs
+## Architecture des conteneurs
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  INTERNET (simulé)                                       │
-│         │                                                │
+│  INTERNET (simulé)                                      │
+│         │                                               │
 │  ┌──────▼──────┐  172.16.10.0/24 (DMZ)                  │
 │  │ nginx-proxy │◄─── attack-simulator (172.16.10.100)   │
-│  │  (Firewall) │                                         │
-│  └──────┬──────┘                                         │
-│         │ 192.168.20.0/24 (LAN Interne)                  │
-│  ┌──────▼──────┐                                         │
-│  │soc-dashboard│  (React — Interface SOC)                │
-│  └──────┬──────┘                                         │
-│         │ 192.168.30.0/24 (Serveurs)                     │
+│  │  (Firewall) │                                        │
+│  └──────┬──────┘                                        │
+│         │ 192.168.20.0/24 (LAN Interne)                 │
+│  ┌──────▼──────┐                                        │
+│  │soc-dashboard│  (React — Interface SOC)               │
+│  └──────┬──────┘                                        │
+│         │ 192.168.30.0/24 (Serveurs)                    │
 │  ┌──────▼──────┐     ┌──────────────┐                   │
 │  │ api-backend │────►│ siem-engine  │                   │
 │  │  (Flask)    │     │ (WAZUH-like) │                   │
 │  └─────────────┘     └──────────────┘                   │
-│                       192.168.40.0/24 (Admin SOC)        │
+│                       192.168.40.0/24 (Admin SOC)       │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -50,7 +50,7 @@ Ce projet Docker démontre de manière **applicative et pratique** les contribut
 
 ---
 
-## 🚀 Démarrage rapide
+## Démarrage rapide
 
 ### Prérequis
 - **Docker Desktop** installé et démarré ([télécharger](https://www.docker.com/products/docker-desktop))
@@ -78,7 +78,7 @@ Ouvrir dans le navigateur : **http://localhost**
 
 ---
 
-## 🎯 Guide de démonstration devant les jurés
+## Guide de démonstration devant les jurés
 
 ### Étape 1 — Présenter le Dashboard SOC
 - Onglet **"🖥️ SOC Dashboard"**
@@ -103,7 +103,7 @@ Ouvrir dans le navigateur : **http://localhost**
 
 ---
 
-## 📚 Standards implémentés
+## Standards implémentés
 
 | Standard | Application dans le prototype |
 |---|---|
@@ -114,7 +114,7 @@ Ouvrir dans le navigateur : **http://localhost**
 
 ---
 
-## 🛠️ Commandes utiles
+## Commandes utiles
 
 ```bash
 # Voir les logs en direct
