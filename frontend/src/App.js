@@ -71,7 +71,7 @@ const NISTBar = ({ label, value, color, desc }) => (
 const Topology = ({ events }) => {
   const alert = events?.[0]?.status === "EN COURS";
   const nodes = [
-    { id: "internet", label: "INTERNET", x: 50, y: 8, icon: "🌐", c: C.dim },
+    { id: "internet", label: "INTERNET", x: 50, y: 5, icon: "🌐", c: C.dim },
     { id: "firewall", label: "FIREWALL\nnginx-proxy", x: 50, y: 24, icon: "🛡️", c: alert ? C.red : C.green },
     { id: "dmz", label: "DMZ\n172.16.10.0/24", x: 18, y: 46, icon: "🔀", c: C.accent },
     { id: "ids", label: "IDS/IPS\nSnort", x: 50, y: 46, icon: "👁️", c: C.yellow },
@@ -87,7 +87,7 @@ const Topology = ({ events }) => {
     ["lan","servers",false], ["lan","soc",false],
   ];
   return (
-    <div style={{ position: "relative", height: 260, background: C.bg, borderRadius: 8, overflow: "hidden" }}>
+    <div style={{ position: "relative", height: 440, background: C.bg, borderRadius: 8, overflow: "hidden" }}>
       <svg width="100%" height="100%" style={{ position: "absolute" }}>
         <defs>
           <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
@@ -223,7 +223,7 @@ export default function App() {
   ];
 
   return (
-    <div style={{ fontFamily:"'Courier New',monospace", background:C.bg, color:C.text, minHeight:"100vh", padding:16, fontSize:13 }}>
+    <div style={{ fontFamily:"'Courier New',monospace", background:C.bg, color:C.text, minHeight:"100vh", padding:20, fontSize:13, boxSizing:"border-box" }}>
       {/* Header */}
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", borderBottom:`1px solid ${C.border}`, paddingBottom:12, marginBottom:14 }}>
         <div>
@@ -410,6 +410,32 @@ export default function App() {
               </div>
             ))}
           </div>
+          <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderRadius:8, padding:16, gridColumn:"1/-1" }}>
+            <div style={{ color:C.orange, fontWeight:700, fontSize:12, marginBottom:14, letterSpacing:1 }}>🔐 COMPOSANTS DE SÉCURITÉ DÉPLOYÉS</div>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:10 }}>
+              {[
+                { layer:"COUCHE PÉRIMÈTRE", icon:"🛡️", color:C.accent, items:["Firewall Pfsense/OPNsense","IDS/IPS Snort","Reverse Proxy"] },
+                { layer:"COUCHE RÉSEAU", icon:"🔀", color:C.green, items:["VLAN Segmentation","NAC (802.1X)","VPN IPSec/OpenVPN"] },
+                { layer:"COUCHE HÔTE", icon:"🖥️", color:C.yellow, items:["Antivirus EDR","HIDS (Wazuh)","GPO Hardening"] },
+                { layer:"COUCHE DONNÉES", icon:"🗄️", color:C.purple, items:["Chiffrement AES-256","DLP Solution","Backup chiffré"] },
+                { layer:"COUCHE SUPERVISION", icon:"📊", color:C.orange, items:["SIEM (ELK/Wazuh)","Nagios Monitoring","SOC Alerting"] },
+              ].map((col,i) => (
+                <div key={i} style={{ background:C.bg, border:`1px solid ${col.color}33`, borderTop:`3px solid ${col.color}`, borderRadius:8, padding:12 }}>
+                  <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:10 }}>
+                    <span style={{ fontSize:16 }}>{col.icon}</span>
+                    <span style={{ color:col.color, fontWeight:800, fontSize:9, letterSpacing:1, lineHeight:1.3 }}>{col.layer}</span>
+                  </div>
+                  {col.items.map((item,j) => (
+                    <div key={j} style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 0", borderBottom:`1px solid ${C.border}` }}>
+                      <span style={{ color:col.color, fontSize:10, fontWeight:700 }}>✓</span>
+                      <span style={{ color:C.text, fontSize:10 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderRadius:8, padding:16, gridColumn:"1/-1" }}>
             <div style={{ color:C.green, fontWeight:700, fontSize:12, marginBottom:10, letterSpacing:1 }}>📊 FLUX DE TRAITEMENT DES INCIDENTS (NIST SP 800-61)</div>
             <div style={{ display:"flex", alignItems:"center", gap:8, flexWrap:"wrap" }}>

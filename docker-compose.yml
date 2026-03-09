@@ -93,6 +93,8 @@ services:
   # Génère les événements, simule les attaques, gère le SIEM
   # ─────────────────────────────────────────────────
   api-backend:
+    ports:
+      - "5000:5000"
     build:
       context: ./backend
       dockerfile: Dockerfile
