@@ -52,7 +52,7 @@ export default function NISTTab({ nistData }) {
           ].map((r, i) => (
             <div
               key={i}
-              style={{ background: C.bg, border: `1px solid ${r.c}44`, borderLeft: `3px solid ${r.c}`, borderRadius: 6, padding: 10 }}
+              style={{ background: C.bg, border: `1px solid ${r.c}44`, borderRadius: 6, padding: 10 }}
             >
               <div style={{ display: "flex", gap: 6, alignItems: "center", marginBottom: 5 }}>
                 <span style={{ background: r.c + "33", color: r.c, borderRadius: 4, padding: "1px 6px", fontSize: 9, fontWeight: 700 }}>

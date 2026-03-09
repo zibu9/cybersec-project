@@ -6,7 +6,6 @@ export default function StatCard({ label, value, icon, color, sub }) {
       style={{
         background: C.panel,
         border: `1px solid ${color}33`,
-        borderLeft: `3px solid ${color}`,
         borderRadius: 8,
         padding: "14px 16px",
         flex: 1,

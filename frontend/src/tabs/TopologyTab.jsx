@@ -73,7 +73,7 @@ export default function TopologyTab({ evList }) {
           ].map((col, i) => (
             <div
               key={i}
-              style={{ background: C.bg, border: `1px solid ${col.color}33`, borderTop: `3px solid ${col.color}`, borderRadius: 8, padding: 12 }}
+              style={{ background: C.bg, border: `1px solid ${col.color}33`, borderTop: "none", borderRadius: 8, padding: 12 }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
                 <span style={{ fontSize: 16 }}>{col.icon}</span>

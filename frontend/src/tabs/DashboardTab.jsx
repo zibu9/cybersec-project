@@ -150,7 +150,7 @@ export default function DashboardTab({ statData, trafficData, evList, API }) {
             </thead>
             <tbody>
               {evList.map((e, i) => (
-                <tr key={e.id} style={{ borderTop: `1px solid ${C.border}`, background: i === 0 ? C.accent + "08" : "transparent" }}>
+                <tr key={e.id} style={{ background: i === 0 ? C.accent + "08" : "transparent" }}>
                   <td style={{ padding: "6px 10px", color: C.dim, whiteSpace: "nowrap", fontFamily: "monospace" }}>{e.time}</td>
                   <td style={{ padding: "6px 10px", color: C.red, fontFamily: "monospace" }}>{e.src_ip}</td>
                   <td style={{ padding: "6px 10px", color: C.accent, fontFamily: "monospace" }}>{e.dst_ip}</td>
