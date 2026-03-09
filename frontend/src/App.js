@@ -461,6 +461,7 @@ export default function App() {
       )}
 
       <style>{`
+        html,body,#root{margin:0;padding:0;min-height:100%;width:100%}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
         @keyframes fadeIn{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
         *{box-sizing:border-box}
