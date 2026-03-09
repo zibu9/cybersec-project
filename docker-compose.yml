@@ -37,7 +37,7 @@ volumes:
 services:
 
   # ─────────────────────────────────────────────────
-  # 🌐 REVERSE PROXY / POINT D'ENTRÉE (DMZ)
+  # REVERSE PROXY / POINT D'ENTRÉE (DMZ)
   # Simule le pare-feu périmétrique
   # ─────────────────────────────────────────────────
   nginx-proxy:
@@ -65,7 +65,7 @@ services:
       - "description=Reverse Proxy / Pare-feu applicatif"
 
   # ─────────────────────────────────────────────────
-  # 🖥️  SOC DASHBOARD FRONTEND (LAN)
+  # SOC DASHBOARD FRONTEND (LAN)
   # Interface de supervision en temps réel
   # ─────────────────────────────────────────────────
   soc-dashboard:
@@ -89,7 +89,7 @@ services:
       - "description=Tableau de bord SOC interactif"
 
   # ─────────────────────────────────────────────────
-  # ⚙️  API BACKEND — MOTEUR DE SÉCURITÉ (SERVEURS)
+  # API BACKEND — MOTEUR DE SÉCURITÉ (SERVEURS)
   # Génère les événements, simule les attaques, gère le SIEM
   # ─────────────────────────────────────────────────
   api-backend:
@@ -123,7 +123,7 @@ services:
       - "description=Moteur de détection et simulation d'attaques"
 
   # ─────────────────────────────────────────────────
-  # 👁️  SIEM — MOTEUR DE CORRÉLATION (SOC)
+  # SIEM — MOTEUR DE CORRÉLATION (SOC)
   # Simule Wazuh/ELK pour la corrélation des événements
   # ─────────────────────────────────────────────────
   siem-engine:
@@ -151,7 +151,7 @@ services:
       - "description=Security Information and Event Management (WAZUH-like)"
 
   # ─────────────────────────────────────────────────
-  # 🎯  ATTACK SIMULATOR — LAB DE SIMULATION
+  # ATTACK SIMULATOR — LAB DE SIMULATION
   # Génère des attaques réalistes contrôlées
   # ─────────────────────────────────────────────────
   attack-simulator:

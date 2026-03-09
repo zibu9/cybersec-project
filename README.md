@@ -65,7 +65,7 @@ cd cybersec-project
 # 2. Rendre le script exécutable
 chmod +x start.sh stop.sh
 
-# 3. Démarrer (premier lancement : ~3-5 min pour construire les images)
+# 3. Démarrer (patienter : au premier lancement)
 ./start.sh
 
 # OU sur Windows :
@@ -81,23 +81,23 @@ Ouvrir dans le navigateur : **http://localhost**
 ## Guide de démonstration devant les jurés
 
 ### Étape 1 — Présenter le Dashboard SOC
-- Onglet **"🖥️ SOC Dashboard"**
+- Onglet **"SOC Dashboard"**
 - Montrer les événements de sécurité générés en temps réel
 - Expliquer : IDS/IPS, SIEM, segmentation réseau
 
 ### Étape 2 — Simuler une attaque Ransomware
-- Onglet **"⚔️ Lab Simulation"**
+- Onglet **"Lab Simulation"**
 - Cliquer sur **🔒 Ransomware**
 - Décrire chaque étape : email malveillant → macro → payload → chiffrement
 - Montrer les contre-mesures NIST appliquées automatiquement
 
 ### Étape 3 — Montrer le cadre NIST / ISO 27001
-- Onglet **"📐 NIST / ISO27001"**
+- Onglet **"NIST / ISO27001"**
 - Expliquer les 5 fonctions NIST : Identifier → Protéger → Détecter → Répondre → Récupérer
 - Montrer le score de maturité sécurité
 
 ### Étape 4 — Expliquer la topologie réseau
-- Onglet **"🗺️ Topologie"**
+- Onglet **"Topologie"**
 - Montrer la segmentation VLANs (DMZ / LAN / Serveurs / Admin)
 - Expliquer le rôle de chaque conteneur Docker
 
@@ -138,3 +138,4 @@ docker compose down --rmi all
 
 *© TSHIMANGA MPOLESHA Excellence — DEA/DES Cybersécurité — 2025*  
 *République Démocratique du Congo*
+*by zibu*
